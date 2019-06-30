@@ -1,0 +1,74 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.agarwal.arpit.robochat"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName versionProperty.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        flavorDimensions("access")
+    }
+
+    productFlavors {
+        live {
+            // change the name of application according to variants of app //
+            resValue "string", "app_name", "RoboChat_" + versionProperty.versionName
+        }
+        dev {
+            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
+            // to pre-dex each module and produce an APK that can be tested on
+            // Android Lollipop without time consuming dex merging processes.
+            minSdkVersion 21
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "RoboChat (Dev)_" + versionProperty.versionName
+        }
+        uat {
+            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
+            // to pre-dex each module and produce an APK that can be tested on
+            // Android Lollipop without time consuming dex merging processes.
+            minSdkVersion 21
+            applicationIdSuffix ".uat"
+            resValue "string", "app_name", "RoboChat (Uat)_" + versionProperty.versionName
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            // default is false -> code shrinking , removes dead code but does not obfuscate or optimize whereas proguard do both
+            shrinkResources true
+            //default is false -> resource shrinking , requires minifyEnabled true
+            // Stops the reverse engineering of your application//
+            useProguard true //default true -> code obfuscater
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //signingConfigs signingConfigs.release
+        }
+
+        debug {
+            //if you set useProguard false in your app module's build.gradle file, the Android Gradle plugin uses R8 to shrink your app's code for that build type, regardless of whether you disable R8 in your project's gradle.properties file.
+            useProguard false
+            // default is true -> disables proguard obfuscation butttt....minifyEnable can still be set true,
+            pseudoLocalesEnabled true // generate pseudo locale
+            debuggable true
+            //signingConfigs signingConfigs.debug
+        }
+    }
+
+    //To make use of JAVA 8 features like lambda
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
