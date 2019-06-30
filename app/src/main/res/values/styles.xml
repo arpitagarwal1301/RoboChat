@@ -12,4 +12,13 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <style name="message_style">
+        <item name="android:maxWidth">300dp</item>
+        <item name="android:textSize">@dimen/msg_size</item>
+    </style>
+
+    <style name="subtext_style">
+        <item name="android:textSize">@dimen/subtext_size</item>
+    </style>
+
 </resources>
