@@ -28,9 +28,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.agarwal.arpit.robochat.Utils.AppConstants.URL_TAG;
+import static com.agarwal.arpit.robochat.Utils.AppConstants.USER_CHAT_TAG;
 import static com.agarwal.arpit.robochat.Utils.AppConstants.apiKey;
 import static com.agarwal.arpit.robochat.Utils.AppConstants.chatBotID;
-import static com.agarwal.arpit.robochat.Utils.AppConstants.externalID;
 import static com.agarwal.arpit.robochat.Utils.AppConstants.hostUrl;
 import static com.agarwal.arpit.robochat.Utils.TextUtils.showToast;
 
@@ -49,6 +49,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     private final List<MessageEntity> mAdapterList = new ArrayList<>();
     private ChatRecyclerAdapter adapter ;
     private MessageRepositry messageRepositry;
+    private String userChatTag ;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,12 +57,17 @@ public class ChatScreenActivity extends AppCompatActivity {
         setContentView(R.layout.chat_screen_activity);
         ButterKnife.bind(this);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras!=null){
+            userChatTag = getIntent().getStringExtra(USER_CHAT_TAG);
+        }
+
         setUpController();
         initDatabase();
     }
 
     private void initDatabase() {
-        messageRepositry = new MessageRepositry(getApplicationContext());
+        messageRepositry = new MessageRepositry(getApplicationContext(),userChatTag);
         List<MessageEntity> databaseList = messageRepositry.getMessageEntityList();
 
         mAdapterList.clear();
@@ -112,11 +118,11 @@ public class ChatScreenActivity extends AppCompatActivity {
      */
     private void addMessageToList(String message) {
         MessageEntity item = new MessageEntity();
-        item.setName(externalID);
+        item.setName(userChatTag);
         item.setMsg(message);
         item.setType(MessageType.SENDING.name());
         item.setTime(TextUtils.getCurrentTime());
-        item.setTag(externalID);
+        item.setTag(userChatTag);
         mAdapterList.add(item);
 
 
@@ -130,7 +136,7 @@ public class ChatScreenActivity extends AppCompatActivity {
      */
     private void sendMessageRequest(String message) {
 
-        final String url = hostUrl + "?apiKey=" + apiKey + "&message=" + message + "&chatBotID=" + chatBotID + "&externalID=" + externalID;
+        final String url = hostUrl + "?apiKey=" + apiKey + "&message=" + message + "&chatBotID=" + chatBotID + "&externalID=" + userChatTag;
 
         GsonVolleyRequest gsonRequest = new GsonVolleyRequest(url, ChatResponse.class, null, new Response.Listener<ChatResponse>() {
             @Override
@@ -158,7 +164,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                     item.setMsg(m.getMessage());
                     item.setType(MessageType.RECEIVING.name());
                     item.setTime(TextUtils.getCurrentTime());
-                    item.setTag(externalID);
+                    item.setTag(userChatTag);
                     mAdapterList.add(item);
                     messageRepositry.insert(item);
 

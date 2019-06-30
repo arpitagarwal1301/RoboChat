@@ -13,7 +13,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        Intent intent = new Intent(SplashScreen.this, ChatScreenActivity.class);
+        Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
         startActivity(intent);
         finish();
 

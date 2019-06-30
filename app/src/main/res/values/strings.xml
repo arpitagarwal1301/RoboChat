@@ -3,4 +3,7 @@
     <string name="send_btn">Send</string>
     <string name="edit_text_hint">Type a message</string>
     <string name="empty_msg_error">Enter Message</string>
+    <string name="add_user">Add User</string>
+    <string name="add_new_user_name">Add New User Name</string>
+    <string name="user_present_error">User already present</string>
 </resources>
