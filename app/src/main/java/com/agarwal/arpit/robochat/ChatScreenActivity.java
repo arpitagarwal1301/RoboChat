@@ -12,4 +12,7 @@ public class ChatScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_screen_activity);
     }
+
+
+
 }

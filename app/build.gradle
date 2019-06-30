@@ -72,6 +72,10 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     //Recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha06'
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+    //Volley
+    implementation 'com.android.volley:volley:1.1.1'
 
 
 }
