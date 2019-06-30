@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RoboChat</string>
+    <string name="send_btn">Send</string>
+    <string name="edit_text_hint">Type a message</string>
 </resources>
