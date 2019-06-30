@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.agarwal.arpit.robochat.Utils.MessageType;
 import com.agarwal.arpit.robochat.Utils.TextUtils;
-import com.agarwal.arpit.robochat.entities.ChatMessageItem;
+import com.agarwal.arpit.robochat.database.MessageDatabase;
+import com.agarwal.arpit.robochat.database.MessageEntity;
+import com.agarwal.arpit.robochat.database.MessageRepositry;
 import com.agarwal.arpit.robochat.entities.ChatResponse;
 import com.agarwal.arpit.robochat.entities.Message;
 import com.agarwal.arpit.robochat.network.GsonVolleyRequest;
@@ -44,9 +46,9 @@ public class ChatScreenActivity extends AppCompatActivity {
     @BindView(R.id.chat_send_btn)
     Button sendBtn;
 
-    private final List<ChatMessageItem> mAdapterList = new ArrayList<>();
+    private final List<MessageEntity> mAdapterList = new ArrayList<>();
     private ChatRecyclerAdapter adapter ;
-
+    private MessageRepositry messageRepositry;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +57,18 @@ public class ChatScreenActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setUpController();
+        initDatabase();
+    }
+
+    private void initDatabase() {
+        messageRepositry = new MessageRepositry(getApplicationContext());
+        List<MessageEntity> databaseList = messageRepositry.getMessageEntityList();
+
+        mAdapterList.clear();
+        if (databaseList!=null & databaseList.size()>0){
+            mAdapterList.addAll(databaseList);
+        }
+
     }
 
     private void setUpController() {
@@ -96,12 +110,15 @@ public class ChatScreenActivity extends AppCompatActivity {
     Adding the send message to list and displaying in the list
      */
     private void addMessageToList(String message) {
-        ChatMessageItem item = new ChatMessageItem();
+        MessageEntity item = new MessageEntity();
         item.setName(externalID);
         item.setMsg(message);
-        item.setType(MessageType.SENDING);
+        item.setType(MessageType.SENDING.name());
         item.setTime(TextUtils.getCurrentTime());
         mAdapterList.add(item);
+
+
+        messageRepositry.insert(item);
 
         adapter.notifyDataSetChanged();
     }
@@ -134,12 +151,13 @@ public class ChatScreenActivity extends AppCompatActivity {
             if (response.getSuccess() == 1) {
                 Message m = response.getMessage();
                 if (m!=null){
-                    ChatMessageItem item = new ChatMessageItem();
+                    MessageEntity item = new MessageEntity();
                     item.setName(m.getChatBotName());
                     item.setMsg(m.getMessage());
-                    item.setType(MessageType.RECEIVING);
+                    item.setType(MessageType.RECEIVING.name());
                     item.setTime(TextUtils.getCurrentTime());
                     mAdapterList.add(item);
+                    messageRepositry.insert(item);
 
                     adapter.notifyDataSetChanged();
                 }
@@ -149,9 +167,13 @@ public class ChatScreenActivity extends AppCompatActivity {
                 showToast(getApplicationContext(), "Message Error");
             }
 
-
         }
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MessageDatabase.destroyInstance();
+    }
 }

@@ -11,16 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agarwal.arpit.robochat.Utils.MessageType;
-import com.agarwal.arpit.robochat.entities.ChatMessageItem;
+import com.agarwal.arpit.robochat.database.MessageEntity;
 
 import java.util.List;
 
 public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapter.RHSViewHolder> implements View.OnClickListener{
 
-    private final List<ChatMessageItem> mObjectList ;
+    private final List<MessageEntity> mObjectList ;
     private final RecyclerClickInterface mClickInterface;
 
-    public ChatRecyclerAdapter(List<ChatMessageItem> objectList,RecyclerClickInterface interfaceImplementaion) {
+    public ChatRecyclerAdapter(List<MessageEntity> objectList,RecyclerClickInterface interfaceImplementaion) {
         mObjectList = objectList;
         mClickInterface = interfaceImplementaion;
     }
@@ -34,7 +34,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RHSViewHolder holder, int position) {
-        ChatMessageItem item = mObjectList.get(position);
+        MessageEntity item = mObjectList.get(position);
         String message = item.getMsg();
         String name = item.getName();
         String time= item.getTime();
@@ -43,7 +43,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
         holder.message.setText(message);
         holder.time.setText(time);
 
-        if (item.getType()==MessageType.SENDING){
+        if (item.getType().equalsIgnoreCase(MessageType.SENDING.name())){
             holder.message.setGravity(Gravity.RIGHT);
             holder.parentLayout.setGravity(Gravity.RIGHT);
         }else {

@@ -7,5 +7,6 @@ public class AppConstants {
     public static final String externalID = "arpitvinshu";
     public static final String hostUrl = "https://www.personalityforge.com/api/chat/";
     public static final String URL_TAG = "CHAT_REQUEST";
+    public static final String MESSAGE_TABLE = "messagetable";
 
 }
