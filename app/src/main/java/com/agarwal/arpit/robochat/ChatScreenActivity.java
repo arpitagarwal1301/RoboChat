@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.agarwal.arpit.robochat.Utils.MessageType;
 import com.agarwal.arpit.robochat.Utils.TextUtils;
+import com.agarwal.arpit.robochat.chatbotresponse.ChatResponse;
+import com.agarwal.arpit.robochat.chatbotresponse.Message;
 import com.agarwal.arpit.robochat.database.MessageDatabase;
 import com.agarwal.arpit.robochat.database.MessageEntity;
 import com.agarwal.arpit.robochat.database.MessageRepositry;
-import com.agarwal.arpit.robochat.entities.ChatResponse;
-import com.agarwal.arpit.robochat.entities.Message;
 import com.agarwal.arpit.robochat.network.GsonVolleyRequest;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;

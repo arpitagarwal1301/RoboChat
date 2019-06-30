@@ -1,4 +1,4 @@
-package com.agarwal.arpit.robochat.entities;
+package com.agarwal.arpit.robochat.chatbotresponse;
 
 public class Message {
 
