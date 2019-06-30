@@ -1,7 +1,6 @@
 package com.agarwal.arpit.robochat.network;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
@@ -57,8 +56,6 @@ public class GsonVolleyRequest<T> extends Request<T> {
 
             //By default this cache takes the expiry provided by the server response .
             Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
-            Log.i("Response Cache",cacheEntry.toString());
-
             return Response.success(
                     gson.fromJson(json, clazz), cacheEntry);
         } catch (UnsupportedEncodingException e) {
