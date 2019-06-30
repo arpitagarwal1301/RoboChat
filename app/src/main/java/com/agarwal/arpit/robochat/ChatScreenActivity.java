@@ -69,6 +69,7 @@ public class ChatScreenActivity extends AppCompatActivity {
             mAdapterList.addAll(databaseList);
         }
 
+        notifyDataSet();
     }
 
     private void setUpController() {
@@ -120,7 +121,7 @@ public class ChatScreenActivity extends AppCompatActivity {
 
         messageRepositry.insert(item);
 
-        adapter.notifyDataSetChanged();
+        notifyDataSet();
     }
 
     /*
@@ -159,7 +160,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                     mAdapterList.add(item);
                     messageRepositry.insert(item);
 
-                    adapter.notifyDataSetChanged();
+                    notifyDataSet();
                 }
 
 
@@ -170,6 +171,10 @@ public class ChatScreenActivity extends AppCompatActivity {
         }
     }
 
+    private void notifyDataSet() {
+        adapter.notifyDataSetChanged();
+        recyclerView.smoothScrollToPosition(mAdapterList.size()-1);
+    }
 
     @Override
     protected void onDestroy() {

@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ChatScreenActivity"/>
+        <activity android:name=".ChatScreenActivity" android:windowSoftInputMode="adjustPan"/>
 
     </application>
 </manifest>
