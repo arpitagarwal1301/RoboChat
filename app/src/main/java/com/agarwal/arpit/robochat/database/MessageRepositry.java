@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
+import static com.agarwal.arpit.robochat.Utils.AppConstants.externalID;
+
 public class MessageRepositry {
 
     private MessageDao messageDao;
@@ -13,7 +15,7 @@ public class MessageRepositry {
     public MessageRepositry(Context context) {
         MessageDatabase db = MessageDatabase.getAppDatabase(context);
         messageDao = db.messageDao();
-        messageEntityList = messageDao.getAll();
+        messageEntityList = messageDao.getAll(externalID);
     }
 
     public List<MessageEntity> getMessageEntityList() {

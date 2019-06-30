@@ -116,6 +116,7 @@ public class ChatScreenActivity extends AppCompatActivity {
         item.setMsg(message);
         item.setType(MessageType.SENDING.name());
         item.setTime(TextUtils.getCurrentTime());
+        item.setTag(externalID);
         mAdapterList.add(item);
 
 
@@ -157,6 +158,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                     item.setMsg(m.getMessage());
                     item.setType(MessageType.RECEIVING.name());
                     item.setTime(TextUtils.getCurrentTime());
+                    item.setTag(externalID);
                     mAdapterList.add(item);
                     messageRepositry.insert(item);
 
@@ -173,7 +175,9 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     private void notifyDataSet() {
         adapter.notifyDataSetChanged();
-        recyclerView.smoothScrollToPosition(mAdapterList.size()-1);
+        if (mAdapterList.size()>1){
+            recyclerView.smoothScrollToPosition(mAdapterList.size()-1);
+        }
     }
 
     @Override

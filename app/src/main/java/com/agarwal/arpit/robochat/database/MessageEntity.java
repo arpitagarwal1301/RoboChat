@@ -12,6 +12,9 @@ public class MessageEntity {
     @PrimaryKey(autoGenerate = true)
     private int uid;
 
+    @ColumnInfo(name = "tag")
+    private String tag;
+
     @ColumnInfo(name = "name")
     private String name;
 
@@ -30,6 +33,14 @@ public class MessageEntity {
 
     public void setUid(int uid) {
         this.uid = uid;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public String getName() {

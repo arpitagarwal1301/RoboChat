@@ -11,8 +11,8 @@ import static com.agarwal.arpit.robochat.Utils.AppConstants.MESSAGE_TABLE;
 @Dao
 public interface MessageDao {
 
-    @Query("SELECT * FROM "+MESSAGE_TABLE)
-    List<MessageEntity> getAll();
+    @Query("SELECT * FROM "+MESSAGE_TABLE +" WHERE tag = :tag")
+    public abstract List<MessageEntity> getAll(String tag);
 
     @Insert
     void insertAll(MessageEntity... users);
