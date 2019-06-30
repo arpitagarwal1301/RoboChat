@@ -74,14 +74,16 @@ public class ChatScreenActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
 
-
     }
 
+    /*
+    Checking the edit text for empty string before sending the message
+     */
     private void sendMessage() {
         String message = msgEditText.getText().toString().trim();
 
         if (message.isEmpty()) {
-            TextUtils.showToast(this, "Enter Message");
+            TextUtils.showToast(this, getString(R.string.empty_msg_error));
         } else {
             addMessageToList(message);
             sendMessageRequest(message);
@@ -90,6 +92,9 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     }
 
+    /*
+    Adding the send message to list and displaying in the list
+     */
     private void addMessageToList(String message) {
         ChatMessageItem item = new ChatMessageItem();
         item.setName(externalID);
@@ -101,6 +106,9 @@ public class ChatScreenActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /*
+    Send the request
+     */
     private void sendMessageRequest(String message) {
 
         final String url = hostUrl + "?apiKey=" + apiKey + "&message=" + message + "&chatBotID=" + chatBotID + "&externalID=" + externalID;
